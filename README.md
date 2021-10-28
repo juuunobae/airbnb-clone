@@ -7,3 +7,6 @@
 ## Theory
 - [Python Syntax](instruction/python_syntax.md)
 - [Django](instruction/django.md)
+- [Django Project](instruction/django_project.md)
+- [Migration](instruction/migrations.md)
+- [Application](instruction/application.md)

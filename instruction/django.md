@@ -22,4 +22,6 @@
 - 프로젝트 폴더를 만들고 그 폴더 안에서 터미널에 `pipenv --three` 명령어 실행
   - pipenv --three: python3을 사용할 것이라고 명시하는 것
 - `pipenv shell` 명령어를 이용해 개발환경으로 들어간다.
+  - django에서 무언가를 하려면 `pipenv shell`을 먼저 실행해야 한다.
+  - `django-admin` 명령어로 확인
 - `pipenv install django==[version]`으로 장고 설치
