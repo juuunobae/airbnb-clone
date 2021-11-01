@@ -51,4 +51,4 @@
     - CustomUserAdmin으로 해당 user model을 사용하고 컨트롤할 수 있다.
     - `@admin.register(models.User)`가 admin class 위에 있어야 한다.
 - `UserAdmin.fieldsets`
-  - 장고에서 기본으로 제공하는 필드를 불러온다.
+  - 장고에서 기본으로 제공하는 user 필드를 불러온다.

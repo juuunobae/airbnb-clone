@@ -3,6 +3,10 @@
 - 하나의 디렉토리가 하나의 앱이라고 생각하면 된다.
 - 독립되어 쓸 수 있는 모듈이다.
 - app을 통합하여 하나의 project를 만든다.
+
+# Third Party Apps
+- 장고 외부 라이브러리이다.
+- `settings.py`의 `THIRD_PARTY_APPS = []`에 작성하고 사용한다.
   
 # App 생성하기
 - app 이름은 항상 복수형이여야 한다.
@@ -16,11 +20,33 @@
 ### 설정 옵션
 - admin 페이지의 구성이나 요소를 변경할 수 있다.
 
+#### class Meta:
+- 모든 모델 내에 있는 class
+- verbose_name_plural = ""
+  - django는 admin 페이지에 모델 객체의 이름을 보여줄 때 끝에 s를 붙혀준다.
+  - 보여지는 모델 객체 이름을 복수형으로 표시한다.
+  - 이 옵션을 지정하지 않으면 verbose_name에 s를 붙힌다.
+- verbose_name = ""
+  - django는 admin 페이지에 모델 객체의 이름을 보여줄 때 끝에 s를 붙혀준다.
+  - 보여지는 모델 객체 이름을 단수형으로 표시한다.
+  - 이 옵션을 지정하지 않으면 모델 클래스 이름을 소문자로 변경한다.
+- ordering = ["created", "-name"]
+  - 순서를 변경할 수 있다.
+
 #### fieldSets
 - 필드를 카테고리화 하여 보여준다.
 ```python
 
-    
+    fieldsets = (
+        (
+            "[카테고리명]",
+            {
+                "fields": (
+                    "[필드명]",
+                ),
+            },
+        ),
+    )
 
 ```
 
@@ -35,6 +61,34 @@
 ## models.py
 - 데이터베이스 스키마를 작성하는 파일
 
+### Relationship
+- 모델과 모델 사이의 관계
+
+#### Foreign Key
+- 일대다 관계
+- 하나의 모델과 여러 모델간의 관계를 열결해줄 때 사용된다.
+- 두 model중 여러개가 연결될 model에 Foreign Key field 작성
+- 예를 들어 한 명의 유저가 여러 게시글을 작성하지만 여러 유저가 하나의 게시글을 작성하지는 않는다. 이 때 게시글의 model에 Foreign Key field를 작성해준다.
+```python 
+
+    [필드명] = models.ForeignKey("[연결할 모델명]", [옵션])
+
+```
+- 옵션
+  - on_delete
+    - 연결되어 있는 모델이 삭제 되었을 때 해당 모델은 어떻게 할 것인지 설정
+    - models.CASCADE: 연결되어 있는 모델 전부 같이 삭제된다.
+    - models.PROTECT: 해당 모델을 삭제해야지 연결되어 있는 모델을 삭제할 수 있다.
+    - models.SET_NULL: 
+    - models.SET_DEFAULT: 
+
+#### Many To Many
+- 다대다 관계
+```python 
+
+    [필드명] = models.ManyToMany("[연결할 모델명]")
+
+```
 ### dataField
 - 데이터베이스에 필드를 추가한다.
 `[필드명] = models.[필드종류]([속성])`
@@ -83,6 +137,11 @@
   - 날짜 필드
 - DateTimeField()
   - 날짜, 시간 필드
+- 속성
+  - auto_now_add=True
+    - model이 처음 생성될 때의 시간을 기록해준다.
+  - auto_now=True
+    - model이 업데이트 될 때마다 그 때의 시간을 기록해준다.
 
 #### models.BooleanField()
 - 체크박스 필드

@@ -10,3 +10,6 @@
 - [Django Project](instruction/django_project.md)
 - [Migration](instruction/migrations.md)
 - [Application](instruction/application.md)
+- [User](instruction/user.md)
+- [core](instruction/core.md)
+- [Room](instruction/room.md)
