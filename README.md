@@ -13,3 +13,4 @@
 - [User](instruction/user.md)
 - [core](instruction/core.md)
 - [Room](instruction/room.md)
+- [QuerySets](instruction/querysets.md)

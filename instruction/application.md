@@ -3,10 +3,6 @@
 - 하나의 디렉토리가 하나의 앱이라고 생각하면 된다.
 - 독립되어 쓸 수 있는 모듈이다.
 - app을 통합하여 하나의 project를 만든다.
-
-# Third Party Apps
-- 장고 외부 라이브러리이다.
-- `settings.py`의 `THIRD_PARTY_APPS = []`에 작성하고 사용한다.
   
 # App 생성하기
 - app 이름은 항상 복수형이여야 한다.
@@ -16,6 +12,12 @@
 # App 구성 파일
 ## admin.py
 - 관리자 페이지에 보여지게 될 화면의 구성을 설정하는 파일
+
+### admin function
+- 아드민 클래스 안에 함수를 생성하고 사용할 수 있다.
+- 아드민 함수는 `(self, obj)` 두개의 파라미터를 받는다.
+  - self: 해당 아드민 클래스를 가리킨다.
+  - obj: 해당 모델 객체를 가리킨다, 데이터베이스에서의 행(row)
 
 ### 설정 옵션
 - admin 페이지의 구성이나 요소를 변경할 수 있다.
@@ -41,6 +43,16 @@
         (
             "[카테고리명]",
             {
+                "classes":('[옵션명]'),
+                "fields": (
+                    "[필드명]",
+                ),
+            },
+        ),
+        (
+            "[카테고리명]",
+            {
+                "classes":('[옵션명]'),
                 "fields": (
                     "[필드명]",
                 ),
@@ -56,39 +68,23 @@
 #### list_filter
 - 리스트를 필터링 할 옵션들을 만든다.
 - 필터박스를 만든다.
+  
+#### ordering
+- list 정렬
+- 먼저 적는 순으로 우선정렬
+  
+#### search_fields
+- 검색바를 만들고 검색 설정을 할 수 있다.
+- ForeignKey에 접근하는 방법
+  - `"[연결된 모델 객체명]__[연결된 모델 객체에서 사용할 fields명]"`
+
+#### filter_horizontal
+- 다대다 관계의 필드가 보여지는 방법을 바꾼다.
 
 
 ## models.py
 - 데이터베이스 스키마를 작성하는 파일
 
-### Relationship
-- 모델과 모델 사이의 관계
-
-#### Foreign Key
-- 일대다 관계
-- 하나의 모델과 여러 모델간의 관계를 열결해줄 때 사용된다.
-- 두 model중 여러개가 연결될 model에 Foreign Key field 작성
-- 예를 들어 한 명의 유저가 여러 게시글을 작성하지만 여러 유저가 하나의 게시글을 작성하지는 않는다. 이 때 게시글의 model에 Foreign Key field를 작성해준다.
-```python 
-
-    [필드명] = models.ForeignKey("[연결할 모델명]", [옵션])
-
-```
-- 옵션
-  - on_delete
-    - 연결되어 있는 모델이 삭제 되었을 때 해당 모델은 어떻게 할 것인지 설정
-    - models.CASCADE: 연결되어 있는 모델 전부 같이 삭제된다.
-    - models.PROTECT: 해당 모델을 삭제해야지 연결되어 있는 모델을 삭제할 수 있다.
-    - models.SET_NULL: 
-    - models.SET_DEFAULT: 
-
-#### Many To Many
-- 다대다 관계
-```python 
-
-    [필드명] = models.ManyToMany("[연결할 모델명]")
-
-```
 ### dataField
 - 데이터베이스에 필드를 추가한다.
 `[필드명] = models.[필드종류]([속성])`
@@ -155,6 +151,7 @@
 - URLConf를 생성하기 위해 생성하는 파일
 
 # App 연결하기 
+## Startapp
 - 생성한 앱은 settings.py의 `INSTALLED_APPS`에서 추가 해주어야 한다.
 ```python 
 
@@ -164,3 +161,7 @@
     # apps name = app 디렉토리의 apps.py에 있는 class 이름
     
 ```
+
+## Third Party Apps
+- 장고 외부 라이브러리이다.
+- `settings.py`의 `THIRD_PARTY_APPS = []`에 작성하고 사용한다.
