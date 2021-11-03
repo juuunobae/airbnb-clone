@@ -7,7 +7,7 @@
 - 프로젝트를 생성할 폴더에서 `django-admin startproject [mysite]` 명령어 실행
 
 ## 더 좋은 방법
-- 프로젝트 폴더의 개발환경에서 `django-admin startproject config` 명령어 실행
+- 프로젝트 폴더를 생성하고 그 폴더안(개발환경)에서 `django-admin startproject config` 명령어 실행
 - config 폴더가 생성된다.
 ```
 
