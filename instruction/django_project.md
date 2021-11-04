@@ -61,3 +61,41 @@
 - 
 ## 서버 시작하기
 - `python manage.py runserver`
+
+# django method
+## mark_safe
+- `mark_safe()`로 감싸진 코드는 escape 하지않아도 된다고 알려주는 것
+- 장고는 autoescape가 on으로 활성화되어 있다.
+  - autoescape: .html 파일이 아닌 외부로부터의 코드를 모두 escape화 시키는 것, html태그를 사용해도 string으로 보여진다.
+- `from django.utils.html import mark_safe`
+
+## overriding
+- 부모 클래스에 정의된 save()메소드를 오버라이딩해서 커스텀하고 사용할 수 있다.
+### save()
+- 모델 객체가 저장될 때 실행되는 메소드
+- 모든 곳에서 일어나는 동작에도 메소드를 호출한다.
+- 모델을 control
+- 모델의 데이터만을 처리한다.
+- `(self, *agrs, **kwargs)` 세개의 파라미터를 받는다.
+- super 클래스 메소드를 호출해야지 객체가 데이터베이스에 저장된다.
+```python
+
+  def save(self, *args, **kwargs):
+        ...
+        super().save(*args, **kwargs)
+
+```
+
+### save_model()
+- 어드민 페이지에서 모델 객체를 저장할 때 실행되는 메소드
+- 어드민 페이지에서 일어나는 동작에 메소드를 실행한다.
+- 어드민을 control
+- `(self, request, obj, form, change)` 다섯개의 파라미터를 받는다.
+- super 클래스 메소드를 호출해야지 객체가 데이터베이스에 저장된다.
+```python
+
+  def save_model(self, request, obj, form, change):
+        ...
+        super().save(request, obj, form, change)
+
+```

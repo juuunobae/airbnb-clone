@@ -19,6 +19,34 @@
 - 어드민 함수는 `(self, obj)` 두개의 파라미터를 받는다.
   - self: 해당 아드민 클래스를 가리킨다.
   - obj: 해당 모델 객체를 가리킨다, 데이터베이스에서의 행(row)
+    - .file: obj class의 내부를 보여준다. 여러 메소드들이 내장되어 있다.
+
+### Inline Admin class
+- ForeignKey로 가리키고 있는 모델의 어드민 페이지에서 해당 모델을 보여지게 하는 것
+- 두 종류의 class가 있고, 보여지는 화면이 다르다.
+#### admin.TabularInline
+#### admin.StackedInline
+```python
+
+  # models.py
+  class Photo(core_models.TimeStampeModel):
+
+      """Photo Models Definition"""
+
+      room = models.ForeignKey("Room", related_name="photos", on_delete=models.CASCADE)
+
+
+  # admin.py
+  class PhotoInline(admin.TabularInline):
+
+      model = models.Photo
+
+  class RoomAdmin(admin.ModelAdmin):
+
+    inlines = (PhotoInline,)
+
+```
+- 위의 코드로 예를 들어보면 Photo 모델이 Room 모델을 ForeignKey로 연결하고 있고, RoomAdmin 페이지에서 PhotoAdmin을 보여지게 한다.
 
 ### 설정 옵션
 - admin 페이지의 구성이나 요소를 변경할 수 있다.
@@ -131,6 +159,9 @@
 - Pillow
   - 이미지를 처리하는 파이썬 라이브러리
   - `pipenv install pillow`
+- 속성
+  - upload_to = ''
+  - MEDIA_ROOT 폴더안의 어떤 폴더에 이미지를 저장할 것인지 설정
 
 #### models.DateField(), .DateTimeField()
 - DateField()
@@ -147,12 +178,19 @@
 - 체크박스 필드
   - True & False
 
+#### raw_id_fields
+- relationship으로 연결된 필드를 검색해서 사용할 수 있는 화면으로 바뀐다.
+- 해당 필드의 데이터들이 많아졌을 때 사용하면 유용하다.
+
 ## views.py
 - 앱의 로직을 넣는 파일
 - 모델에서 필요한 정보를 받아와 template에서 전달하는 역할을 한다.
 
 ## urls.py
 - URLConf를 생성하기 위해 생성하는 파일
+## URLconfig
+- urlpatterns에 URL 경로를 추가
+
 
 # App 연결하기 
 ## Startapp
